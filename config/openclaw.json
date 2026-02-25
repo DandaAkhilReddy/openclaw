@@ -16,7 +16,7 @@
             "input": ["text", "image"],
             "contextWindow": 131072,
             "maxTokens": 4096,
-            "compat": { "supportsStore": false }
+            "compat": { "supportsStore": true }
           }
         ]
       }
