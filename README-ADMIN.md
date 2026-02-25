@@ -38,9 +38,10 @@ ssh openclaw@20.124.104.149 "systemctl --user restart openclaw-gateway"
 
 ## Telegram Bot
 - **Bot**: @AkhilReddyDandaBot
-- **Primary Model**: Kimi-K2.5 (azure-openai-responses/Kimi-K2.5)
+- **Primary Model**: GPT-5.2-chat (azure-openai-responses/gpt-5.2-chat)
 - **Fallback Model**: Anthropic Claude Sonnet 4.5 (anthropic/claude-sonnet-4-5-20250929)
-- **Azure OpenAI Endpoint**: https://areddy-1384-resource.cognitiveservices.azure.com
+- **Azure OpenAI Endpoint**: https://areddy-1626-resource.cognitiveservices.azure.com
+- **Auto-Chat**: Owner-commanded autonomous messaging (see config/AGENTS.md)
 
 ## Monthly Cost Estimate
 | Component | Cost |
@@ -48,13 +49,13 @@ ssh openclaw@20.124.104.149 "systemctl --user restart openclaw-gateway"
 | Azure B2s VM | ~$30 |
 | OS Disk (30GB SSD) | ~$2.40 |
 | Public IP | ~$3.65 |
-| Azure OpenAI API (Kimi-K2.5) | ~$5-25 |
+| Azure OpenAI API (GPT-5.2-chat) | ~$5-25 |
 | Azure GPT-4o-transcribe STT | ~$1 |
 | **Total** | **~$42-62** |
 
 ## Nested Subagents
 
-The orchestrator (Kimi-K2.5) spawns specialized workers for multi-step tasks.
+The orchestrator (GPT-5.2-chat) spawns specialized workers for multi-step tasks.
 
 ### Architecture
 
@@ -62,13 +63,13 @@ The orchestrator (Kimi-K2.5) spawns specialized workers for multi-step tasks.
 User (Telegram) → @AkhilReddyDandaBot
                      │
               ┌──────┴──────┐  (depth 0: main agent)
-              │ Orchestrator │  model: Kimi-K2.5
+              │ Orchestrator │  model: GPT-5.2-chat
               └──────┬──────┘
          ┌───────────┼───────────┐
          ▼           ▼           ▼     (depth 1: workers)
    ┌──────────┐ ┌─────────┐ ┌──────────┐
    │Researcher│ │  Coder  │ │Summarizer│
-   │(Kimi-K2.5)│ │(Kimi-K2.5)│ │(Kimi-K2.5)│
+   │(GPT-5.2) │ │(GPT-5.2)│ │(GPT-5.2) │
    └──────────┘ └─────────┘ └──────────┘
 ```
 
@@ -76,9 +77,9 @@ User (Telegram) → @AkhilReddyDandaBot
 
 | Profile | Model | Tools | Use Case |
 |---------|-------|-------|----------|
-| `researcher` | Azure Kimi-K2.5 | web_search, web_fetch, read | Web search, fact-finding, reading docs |
-| `coder` | Azure Kimi-K2.5 | exec, read, write | Writing/editing code, running tests |
-| `summarizer` | Azure Kimi-K2.5 | read | Condensing results into summaries |
+| `researcher` | Azure GPT-5.2-chat | web_search, web_fetch, read | Web search, fact-finding, reading docs |
+| `coder` | Azure GPT-5.2-chat | exec, read, write | Writing/editing code, running tests |
+| `summarizer` | Azure GPT-5.2-chat | read | Condensing results into summaries |
 
 ### Config Location
 
@@ -124,9 +125,9 @@ Both scripts use **safe merge deploy** — local config keys overwrite their VM 
 
 | Component | Cost per MTok |
 |-----------|--------------|
-| Kimi-K2.5 (all agents) | TBD (pricing not yet published) |
+| GPT-5.2-chat (all agents) | TBD (pricing not yet published) |
 
-All agents use Azure Kimi-K2.5 as primary with Anthropic Claude Sonnet 4.5 as fallback.
+All agents use Azure GPT-5.2-chat as primary with Anthropic Claude Sonnet 4.5 as fallback.
 Estimated additional cost with subagents: **~$5-15/month** depending on usage.
 
 ## Telegram DM Access Control
