@@ -1,12 +1,36 @@
 {
   "gateway": {
-    "mode": "local",
-    "auth": {
-      "token": "18fbbdc708fa37584f153ad05b98ee124d4ffbfe64778627dc04d60135f39eb9"
-    }
+    "mode": "local"
   },
   "cron": {
     "enabled": true
+  },
+  "models": {
+    "providers": {
+      "azure-openai-responses": {
+        "models": [
+          {
+            "id": "Kimi-K2.5",
+            "name": "Kimi K2.5 (Azure)",
+            "reasoning": true,
+            "input": ["text"],
+            "contextWindow": 131072,
+            "maxTokens": 8192,
+            "compat": { "supportsStore": false }
+          },
+          {
+            "id": "gpt-5-mini",
+            "name": "GPT-5-mini (Azure)",
+            "reasoning": true,
+            "input": ["text", "image"],
+            "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+            "contextWindow": 391000,
+            "maxTokens": 16384,
+            "compat": { "supportsStore": false }
+          }
+        ]
+      }
+    }
   },
   "tools": {
     "message": {
@@ -61,7 +85,7 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "azure-openai/Kimi-K2.5",
+        "primary": "azure-openai-responses/Kimi-K2.5",
         "fallbacks": ["anthropic/claude-sonnet-4-5-20250929"]
       },
       "heartbeat": {
@@ -69,7 +93,7 @@
       },
       "subagents": {
         "maxConcurrent": 5,
-        "model": "azure-openai/Kimi-K2.5",
+        "model": "azure-openai-responses/Kimi-K2.5",
         "archiveAfterMinutes": 60
       }
     },
@@ -77,7 +101,7 @@
       {
         "id": "main",
         "default": true,
-        "model": "azure-openai/Kimi-K2.5",
+        "model": "azure-openai-responses/Kimi-K2.5",
         "tools": { "allow": ["message"] },
         "subagents": {
           "allowAgents": ["researcher", "coder", "summarizer"]
@@ -85,21 +109,21 @@
       },
       {
         "id": "researcher",
-        "model": "azure-openai/Kimi-K2.5",
+        "model": "azure-openai-responses/Kimi-K2.5",
         "tools": { "allow": ["web_search", "web_fetch", "read"] },
         "sandbox": { "mode": "all", "scope": "session" },
         "subagents": { "allowAgents": [] }
       },
       {
         "id": "coder",
-        "model": "azure-openai/Kimi-K2.5",
+        "model": "azure-openai-responses/Kimi-K2.5",
         "tools": { "allow": ["exec", "read", "write"] },
         "sandbox": { "mode": "non-main", "scope": "session" },
         "subagents": { "allowAgents": [] }
       },
       {
         "id": "summarizer",
-        "model": "azure-openai/Kimi-K2.5",
+        "model": "azure-openai-responses/Kimi-K2.5",
         "tools": { "allow": ["read"] },
         "sandbox": { "mode": "all", "scope": "session" },
         "subagents": { "allowAgents": [] }

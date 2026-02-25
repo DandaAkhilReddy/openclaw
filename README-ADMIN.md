@@ -38,7 +38,7 @@ ssh openclaw@20.124.104.149 "systemctl --user restart openclaw-gateway"
 
 ## Telegram Bot
 - **Bot**: @AkhilReddyDandaBot
-- **Primary Model**: Kimi-K2.5 (azure-openai/Kimi-K2.5)
+- **Primary Model**: Kimi-K2.5 (azure-openai-responses/Kimi-K2.5)
 - **Fallback Model**: Anthropic Claude Sonnet 4.5 (anthropic/claude-sonnet-4-5-20250929)
 - **Azure OpenAI Endpoint**: https://areddy-1384-resource.cognitiveservices.azure.com
 
