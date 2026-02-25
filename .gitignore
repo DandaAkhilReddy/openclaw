@@ -1,0 +1,5 @@
+tmp_ssh_out.txt
+.claude/
+.env
+*.pem
+*.key

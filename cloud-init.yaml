@@ -1,0 +1,20 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - build-essential
+  - git
+  - curl
+  - unzip
+  - fail2ban
+  - unattended-upgrades
+  - ffmpeg
+runcmd:
+  - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+  - apt-get install -y nodejs
+  - npm install -g openclaw@latest
+  - fallocate -l 2G /swapfile
+  - chmod 600 /swapfile
+  - mkswap /swapfile
+  - swapon /swapfile
+  - echo '/swapfile none swap sw 0 0' >> /etc/fstab
