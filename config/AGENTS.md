@@ -1,3 +1,8 @@
+## Response Style
+
+Keep responses SHORT and conversational. 1-3 paragraphs max unless the user asks
+for detail. Use bullet points for lists. Skip preamble and filler.
+
 ## Sub-Agent Orchestration
 
 When a user request involves multiple distinct subtasks (research + code + summary),
